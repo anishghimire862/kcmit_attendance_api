@@ -11,6 +11,7 @@ var Students = require('../Controller/students.controller');
 var StudentSemesters = require('../Controller/student.semesters.controller');
 
 var Teachers = require('../Controller/teachers.controller');
+var TeacherSubjects = require('../Controller/teacher.subjects.controller');
 // routes for students
 
 router.get('/students',
@@ -87,4 +88,25 @@ router.delete('/teachers/:id',
     Teachers.deleteTeacher
 );
 
+// routes for teacher_subjects
+
+router.get('/teacher_subjects',
+    TeacherSubjects.getTeacherSubjects
+);
+
+router.get('/teacher_subjects/teacher/:teacherId',
+    TeacherSubjects.getTeacherSubjectByTeacherId
+);
+
+router.get('/teacher_subjects/subject/:subjectId',
+    TeacherSubjects.getTeacherSubjectBySubjectId
+);
+
+router.post('/teacher_subjects',
+    TeacherSubjects.addTeacherSubject
+);
+
+router.patch('/teacher_subjects',
+    TeacherSubjects.updateTeacherSubject
+);
 module.exports = router;

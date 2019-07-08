@@ -71,13 +71,11 @@ module.exports = {
                 else {
                     mail.transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
-                            console.log(error);
                             res.status(400).send({success: false})
                         } else {
-                            console.log('Mail sent');
                             res.status(201).json({ data: req.body, image: image});
                         }
-                    });
+                    }); 
                 }
             })
         }
@@ -89,10 +87,8 @@ module.exports = {
                 else {
                     mail.transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
-                            console.log(error);
                             res.status(400).send({success: false})
                         } else {
-                            console.log('Mail sent');
                             res.status(201).json({ data: req.body, image: image});
                         }
                     });
