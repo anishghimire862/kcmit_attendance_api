@@ -1,5 +1,8 @@
 const db = require('../Model/db');
 var randomPassword = require('../../middleware/random.password.generator');
+
+var mail = require('../../mail');
+
 module.exports = {
     getTeachers: function(req, res) {
         db.query("SELECT * FROM teachers", (err, data) => {
@@ -34,23 +37,66 @@ module.exports = {
         let phone = req.body.phone;
         let password = randomPassword.generateRandomPassword();
 
+        // setup email data with unicode symbols
+        let mailOptions = {
+            from: '"KCMIT College" <kcmitattendance@zoho.com>', // sender address
+            to: email, // list of receivers
+            subject: 'Lecturer Login Information', // Subject line
+            html: `<h1>Namaste, ${name}.</h1>
+                <p> 
+                    Welcome to KCMIT Attendance System.
+                    Your login details are:
+                    email: ${email},
+                    password: ${password} 
+                </p>
+
+                <p>
+                    For better security please change your password
+                    as soon as possible.
+                </p>
+
+                <p>
+                    Thank you,
+                    KCMIT College.
+                </p>
+            `
+        };
+
         if(req.file) {
             let image = req.file.filename;
             db.query("INSERT INTO teachers(name, email, phone, password, image) values(?,?,?,?,?)", 
                 [name, email, phone, password, image], (err, data) => {
                 if(err)
                     res.json(err);
-                else 
-                    res.status(201).json({ data: req.body, image: image});
+                else {
+                    mail.transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            console.log(error);
+                            res.status(400).send({success: false})
+                        } else {
+                            console.log('Mail sent');
+                            res.status(201).json({ data: req.body, image: image});
+                        }
+                    });
+                }
             })
         }
         else {
             db.query("INSERT INTO teachers(name, email, phone, password) values(?,?,?,?)", 
             [name, email, phone, password], (err, data) => {
-            if(err)
-                res.json(err);
-            else 
-                res.status(201).json({ data: req.body });
+                if(err)
+                    res.json(err);
+                else {
+                    mail.transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            console.log(error);
+                            res.status(400).send({success: false})
+                        } else {
+                            console.log('Mail sent');
+                            res.status(201).json({ data: req.body, image: image});
+                        }
+                    });
+                }
             }) 
         }
     },
