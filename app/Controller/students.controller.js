@@ -28,6 +28,22 @@ module.exports = {
         })
     },
 
+    getStudentByBatch: function(req, res) {
+        let batch = req.params.batch;
+        db.query("SELECT * FROM students where batch=?", [batch], (err, data) => {
+            if(err)
+                res.json(err);
+            else {
+                if(data.length === 0) {
+                    res.status(404).json({ status: 'Nothing found.' });
+                }
+                else {
+                    res.status(200).json({ data: data })
+                }
+            }
+        })
+    },
+
     addStudent: function(req, res) {
         let batch = req.body.batch;
         let faculty = req.body.faculty;

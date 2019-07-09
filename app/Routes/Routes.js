@@ -12,6 +12,9 @@ var StudentSemesters = require('../Controller/student.semesters.controller');
 
 var Teachers = require('../Controller/teachers.controller');
 var TeacherSubjects = require('../Controller/teacher.subjects.controller');
+
+var Subjects = require('../Controller/subjects.controller');
+var StudentSubjectSemesters = require('../Controller/student.subject.semesters.controller');
 // routes for students
 
 router.get('/students',
@@ -20,6 +23,10 @@ router.get('/students',
 
 router.get('/students/:id',
     Students.getStudentById
+);
+
+router.get('/students/batch/:batch',
+    Students.getStudentByBatch
 );
 
 router.post('/students',
@@ -109,4 +116,37 @@ router.post('/teacher_subjects',
 router.patch('/teacher_subjects',
     TeacherSubjects.updateTeacherSubject
 );
+
+// subjects
+
+router.get('/subjects',
+    Subjects.getSubjects
+);
+
+router.get('/subjects/:id',
+    Subjects.getSubjectById
+);
+
+router.post('/subjects',
+    Subjects.addSubject
+);
+
+router.patch('/subjects',
+    Subjects.updateSubject
+);
+
+router.delete('/subjects/:id',
+    Subjects.deleteSubject
+);
+
+// student_subject_semesters
+
+router.get('/student_subject_semesters',
+    StudentSubjectSemesters.getStudentSubjectSemesters
+);
+
+router.post('/student_subject_semesters',
+    StudentSubjectSemesters.addStudentSubjectSemester
+);
+
 module.exports = router;

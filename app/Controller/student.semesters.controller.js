@@ -29,7 +29,7 @@ module.exports = {
     },
 
     // getStudentSemestersByStudentId() displays all semesters a student has studied.
-
+    
     getStudentSemestersByStudentId: function(req, res) {
         let studentId = req.params.id;
         db.query("SELECT * FROM student_semesters where student_id=?", [studentId], (err, data) => {
