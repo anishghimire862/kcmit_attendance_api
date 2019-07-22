@@ -15,6 +15,8 @@ var TeacherSubjects = require('../Controller/teacher.subjects.controller');
 
 var Subjects = require('../Controller/subjects.controller');
 var StudentSubjectSemesters = require('../Controller/student.subject.semesters.controller');
+
+var attendances = require('../Controller/attendances.controller');
 // routes for students
 
 router.get('/students',
@@ -54,7 +56,8 @@ router.get('/student_semesters/:id',
     StudentSemesters.getStudentSemestersByStudentSemesterId
 );
 
-                    //returns all semesters studied by a student.
+//returns all semesters studied by a student.
+
 router.get('/student_semesters/all_semesters/:id',
     StudentSemesters.getStudentSemestersByStudentId
 );
@@ -149,4 +152,9 @@ router.post('/student_subject_semesters',
     StudentSubjectSemesters.addStudentSubjectSemester
 );
 
+// route to get all students of a class provided faculty, section and semester
+
+router.get('/attendance/:faculty/:section/:semester',
+    attendances.getStudentsForAttendance
+)
 module.exports = router;
