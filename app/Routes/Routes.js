@@ -6,6 +6,8 @@ var multerStorage = require('../../multer');
 var upload = multer({ storage: multerStorage.storage });
 
 var validator = require('../../middleware/validator');
+var auth = require('../../config/middleware/authorization')
+var LoginController = require('../Controller/login.controller')
 
 var Students = require('../Controller/students.controller');
 var StudentSemesters = require('../Controller/student.semesters.controller');
@@ -17,9 +19,17 @@ var Subjects = require('../Controller/subjects.controller');
 var StudentSubjectSemesters = require('../Controller/student.subject.semesters.controller');
 
 var attendances = require('../Controller/attendances.controller');
+
+// login
+
+router.post('/login',
+    LoginController.login
+)
+
 // routes for students
 
 router.get('/students',
+    auth.permit('teacher'),
     Students.getStudents
 );
 
