@@ -26,6 +26,10 @@ router.post('/login',
     LoginController.login
 )
 
+router.get('/api/auth/user'
+	LoginController.getDetails
+)
+
 // routes for students
 
 router.get('/students',

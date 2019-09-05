@@ -14,5 +14,8 @@ module.exports = {
                 res.status(200).json({ status: info.message, token: token, role: info.role });
             }
         })(req, res);
-    }
+    },
+		getDetails: function(req, res) {
+			res.status(200).json(loggedIn: true)
+		}
 }
