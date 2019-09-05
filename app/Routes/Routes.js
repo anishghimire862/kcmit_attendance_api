@@ -29,7 +29,7 @@ router.post('/login',
 // routes for students
 
 router.get('/students',
-    auth.permit('teacher'),
+    // auth.permit('teacher'),
     Students.getStudents
 );
 
