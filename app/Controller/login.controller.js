@@ -16,6 +16,6 @@ module.exports = {
         })(req, res);
     },
 		getDetails: function(req, res) {
-			res.status(200).json(loggedIn: true)
+			res.status(200).json({loggedIn: true})
 		}
 }
