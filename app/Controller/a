@@ -1,0 +1,7 @@
+SELECT * FROM student_semesters inner join 
+students on student_semesters.student_id = students.id
+inner join student_subject_semesters on student_subject_semesters.student_semester_id = student_semesters.id 
+inner join subjects on student_subject_semesters.subject_id = subjects.id
+inner join attendances on subjects.id = attendances.subject_id
+where semester = '6' and section = 'B' and faculty = 'BIM' and subject_code = 'IT0001'  and `date` >= '2019-09-01' and 
+`date` <= '2019-09-30'

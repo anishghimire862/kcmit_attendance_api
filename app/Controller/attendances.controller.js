@@ -1,4 +1,5 @@
 const db = require('../Model/db');
+const attendanceData = require('./attendanceDto')
 
 module.exports = {
     getStudentsForAttendance: function(req, res) {
@@ -30,19 +31,48 @@ module.exports = {
             }
         )  
     },
-    submitAttendance: function(req, res) {
+       getAttendance: function(req, res) {
+
+      let semester = req.body.semester;
+      let section = req.body.section;
+      let faculty = req.body.faculty;
+      let subject_code = req.body.subject_code;
+      let from = req.body.from
+      let to = req.body.to
+
+			db.query("SELECT * FROM student_semesters inner join" +
+				" students ON student_semesters.student_id = students.id" +
+				" inner join student_subject_semesters ON student_subject_semesters.student_semester_id = student_semesters.id" +
+				" inner join subjects ON student_subject_semesters.subject_id = subjects.id" +
+				" inner join attendances ON subjects.id = attendances.subject_id" +
+				" WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND `date` between `from` AND `to`", [semester, section, faculty,subject_code, from, to],
+				(err, data) => {
+					if(err)
+						res.json(err)
+					else 
+						res.json(data)
+				}
+			)
+
+
+    },
+
+		submitAttendance: function(req, res) {
         let datetime = new Date()
         let date = datetime.toISOString().slice(0,10)
-        let student_semester_id = req.student_semester_id
-        let status = req.status
-        let subject_code = req.subject_code
+				let attendance = req.body
+				for (var i=0; i<attendance.length; i++) {
+					student_semester_id = attendance[i].student_semester_id;
+					
+					status = attendance[i].status
+					subject_code = attendance[i].subject_code;
 
-        db.query("INSERT INTO attendance(date, student_semester_id, status, subject_code) values(?,?,?,?)",
+					db.query("INSERT INTO attendances(date, student_semester_id, status, subject_id) values(?,?,?,?)",
             [date, student_semester_id, status, subject_code], (err, data) => {
                 if(err)
                     res.json(err)
-                else   
-                    res.status(201).json({ data: req.body });
-            })
-    }
+            })		
+				}
+					res.status(201).json({ data: req.body });
+			}
 }

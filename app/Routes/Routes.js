@@ -171,4 +171,13 @@ router.post('/student_subject_semesters',
 router.get('/attendance/:faculty/:section/:semester',
     attendances.getStudentsForAttendance
 )
+
+router.post('/attendance',
+	attendances.submitAttendance
+)
+
+router.get('/attendance_sheet/:semester/:section/:faculty/:subject_code/:from/:to/',
+	attendances.getAttendance
+)
+
 module.exports = router;
