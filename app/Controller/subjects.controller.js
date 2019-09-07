@@ -29,8 +29,8 @@ module.exports = {
     },
 
     addSubject: function(req, res) {
-        let subjectName = req.body.subjectName;
-        let subjectCode = req.body.subjectCode;
+        let subjectName = req.body.subject_name;
+        let subjectCode = req.body.subject_code;
         db.query("INSERT INTO subjects(subject_name, subject_code) values(?,?)", 
             [subjectName, subjectCode], (err, data) => {
             if(err)
@@ -41,9 +41,9 @@ module.exports = {
     },
 
     updateSubject: function(req, res, next) {
-        let subjectName = req.body.subjectName;
-        let subjectCode = req.body.subjectCode;
-        let subjectId = req.body.subjectId;
+        let subjectName = req.body.subject_name;
+        let subjectCode = req.body.subject_code;
+        let subjectId = req.body.id;
  
         db.query("UPDATE subjects SET subject_name=?, subject_code=? WHERE id=?", 
             [subjectName, subjectCode, subjectId], (err, data) => {

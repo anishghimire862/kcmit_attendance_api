@@ -73,7 +73,7 @@ module.exports = {
                         if (error) {
                             res.status(400).send({success: false})
                         } else {
-                            res.status(201).json({ data: req.body, image: image});
+                            res.status(201).json({ data: req.body });
                         }
                     }); 
                 }
@@ -89,7 +89,7 @@ module.exports = {
                         if (error) {
                             res.status(400).send({success: false})
                         } else {
-                            res.status(201).json({ data: req.body, image: image});
+                            res.status(201).json({ data: req.body});
                         }
                     });
                 }

@@ -33,14 +33,15 @@ module.exports = {
     },
        getAttendance: function(req, res) {
 
-      let semester = req.body.semester;
-      let section = req.body.section;
-      let faculty = req.body.faculty;
-      let subject_code = req.body.subject_code;
-      let from = req.body.from
-      let to = req.body.to
-
-			db.query("SELECT * FROM student_semesters inner join" +
+      let semester = req.params.semester;
+      let section = req.params.section;
+      let faculty = req.params.faculty;
+      let subject_code = req.params.subject_code;
+      let from = req.params.from
+      let to = req.params.to
+			console.log(from)
+			console.log(to)
+			db.query("SELECT students.name as name, attendances.date as start, attendances.status as status FROM student_semesters inner join" +
 				" students ON student_semesters.student_id = students.id" +
 				" inner join student_subject_semesters ON student_subject_semesters.student_semester_id = student_semesters.id" +
 				" inner join subjects ON student_subject_semesters.subject_id = subjects.id" +
@@ -48,12 +49,24 @@ module.exports = {
 				" WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND `date` between `from` AND `to`", [semester, section, faculty,subject_code, from, to],
 				(err, data) => {
 					if(err)
+						console.log(err)
+					else
+						res.status(200).json({data: data})
+				}
+		)
+
+/*
+     db.query("SELECT * FROM student_semesters inner join students on student_semesters.student_id = students.id inner join student_subject_semesters on student_subject_semesters.student_semester_id = student_semesters.id inner join subjects on student_subject_semesters.subject_id = subjects.id inner join attendances on subjects.id = attendances.subject_id where semester = '6' and section = 'B' and faculty = 'BIM' and subject_code = 'IT0015'  and `date` >= '2019-09-01' and `date` <= '2019-09-30'",
+					(err,data) => {
+					if(err)
 						res.json(err)
-					else 
-						res.json(data)
+					else { 
+						console.log(data)
+						res.status(200).json({ data: data })
+					}
 				}
 			)
-
+*/
 
     },
 
