@@ -15,9 +15,7 @@ passport.use(new LocalStrategy(
         passwordField: 'password'
     },
     function(email, password, done) {
-        console.log(email)
         db.query("SELECT * FROM teachers WHERE email=?", [email], (error, results, fields) => {
-            console.log(results);
             if(results.length == 0) {
                 return done(null, false, {
                     message: "Incorrect email."

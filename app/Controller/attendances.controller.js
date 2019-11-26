@@ -6,30 +6,56 @@ module.exports = {
         let faculty = req.params.faculty;
         let section = req.params.section;
         let semester = req.params.semester;
-        db.query("SELECT students.id as 'student_id', student_semesters.id AS 'student_semester_id', "+
-            "name, image FROM "+
-            "students "+
-            "INNER JOIN student_semesters ON students.id = "+
-            "student_semesters.student_id AND NOW() BETWEEN `from` AND `to` AND students.faculty=?"+
-            "AND student_semesters.section =? and student_semesters.semester =?", [faculty, section, semester], 
-            (err, data) => {
-                if(err)
-                    res.json(err);
-                else {
-                    if(data.length === 0) {
-                        res.status(404).json({ status: 'Nothing found.' });
+
+        db.query("SELECT * FROM students WHERE faculty=? AND section=?", [faculty, section], (err, data) => {
+            if(err)
+                console.log(err)
+            else {
+                let studentsArray = []
+                for(let i = 0; i < data.length; i++) {
+                    let studentEnrolledYear = data[i].batch
+                    let currentDate = new Date()
+                    let currentYear = currentDate.getFullYear()
+                    let currentMonth = currentDate.getMonth() + 1
+                    let studentSemester = currentYear - studentEnrolledYear
+                    studentSemester *= 2
+                    
+                    if(currentMonth >= 11) {
+                        studentSemester += 1
                     }
-                    else {
-                        res.status(200).json({ 
-                            faculty: faculty,
-                            section: section,
-                            semester: semester,
-                            students: data 
-                        })
-                    }
-                } 
+
+                    studentsArray.push({...data[i], semester: studentSemester})
+
+                }
+                let filteredStudents = studentsArray.filter(x => x.semester == semester)
+                res.json(filteredStudents)
             }
-        )  
+        })
+
+        // db.query("SELECT students.id as 'student_id', student_semesters.id AS 'student_semester_id', "+
+        //     "name, image FROM "+
+        //     "students "+
+        //     "INNER JOIN student_semesters ON students.id = "+
+        //     "student_semesters.student_id AND NOW() BETWEEN `from` AND `to` AND students.faculty=?"+
+        //     "AND student_semesters.section =? and student_semesters.semester =?", [faculty, section, semester], 
+        //     (err, data) => {
+        //         if(err)
+        //             res.json(err);
+        //         else {
+        //             if(data.length === 0) {
+        //                 res.status(404).json({ status: 'Nothing found.' });
+        //             }
+        //             else {
+        //                 res.status(200).json({ 
+        //                     faculty: faculty,
+        //                     section: section,
+        //                     semester: semester,
+        //                     students: data 
+        //                 })
+        //             }
+        //         } 
+        //     }
+        // )  
     },
        getAttendance: function(req, res) {
 
@@ -39,8 +65,6 @@ module.exports = {
       let subject_code = req.params.subject_code;
       let from = req.params.from
       let to = req.params.to
-			console.log(from)
-			console.log(to)
 			db.query("SELECT students.name as name, attendances.date as start, attendances.status as status FROM student_semesters inner join" +
 				" students ON student_semesters.student_id = students.id" +
 				" inner join student_subject_semesters ON student_subject_semesters.student_semester_id = student_semesters.id" +

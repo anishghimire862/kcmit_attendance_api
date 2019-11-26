@@ -168,6 +168,10 @@ router.post('/student_subject_semesters',
 
 // route to get all students of a class provided faculty, section and semester
 
+// router.get('/attendance/:faculty/:section/:semester',
+//     attendances.getStudentsForAttendance
+// )
+
 router.get('/attendance/:faculty/:section/:semester',
     attendances.getStudentsForAttendance
 )
