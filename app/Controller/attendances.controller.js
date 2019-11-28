@@ -40,9 +40,10 @@ module.exports = {
       let to = req.params.to
     //   ,semester, section, faculty, subject_code
         db.query("SELECT students.name as name, subjects.subject_name as subject, DATE_FORMAT(attendances.date, '%Y-%m-%d') as start," +
-            " attendances.status as status FROM attendances inner join" +
+            " attendances.status as status, teachers.name as teacherName FROM attendances inner join" +
             " students ON attendances.student_id = students.id" +
             " inner join subjects ON attendances.subject_id = subjects.subject_code" +
+            " inner join teachers ON attendances.teacher_id_fk = teachers.id" +
             " WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND date BETWEEN ? AND ?",   
                 [semester, section, faculty, subject_code, from, to], (err, data) => {
                 if(err){
@@ -80,9 +81,10 @@ module.exports = {
         student_id = attendance[i].student_id;
         semester = attendance[i].semester;
         subject_id = attendance[i].subject_id;
+        teacher_id_fk = attendance[i].teacher_id_fk
 
-        db.query("INSERT INTO attendances(date, status, subject_id, student_id, semester) values(?,?,?,?,?)",
-        [date, status, subject_id, student_id, semester], (err, data) => {
+        db.query("INSERT INTO attendances(date, status, subject_id, student_id, semester, teacher_id_fk) values(?,?,?,?,?,?)",
+        [date, status, subject_id, student_id, semester, teacher_id_fk], (err, data) => {
             if(err)
                 console.log(err)
         })		

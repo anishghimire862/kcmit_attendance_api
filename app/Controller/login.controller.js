@@ -25,8 +25,8 @@ module.exports = {
         } catch (e) {
             return res.status(401).send('unauthorized');
         }
-				role.getRole(decoded, function(err, data) {
-        	res.status(200).json({ loggedIn: true, role: data })
+        role.getRole(decoded, function(err, data) {
+        	res.status(200).json({ loggedIn: true, data: data })
       	})
 
 			}

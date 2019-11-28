@@ -87,8 +87,9 @@ module.exports = {
                 [batch, faculty, name, email, phone, image, id], (err, data) => {
                 if(err)
                     res.json(err);
-                else 
+                else {
                     res.status(200).json({ data: req.body, image: image});
+                }
             })
         }
         else {
