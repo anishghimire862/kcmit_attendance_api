@@ -1,5 +1,4 @@
 const db = require('../Model/db');
-const attendanceData = require('./attendanceDto')
 
 module.exports = {
     getStudentsForAttendance: function(req, res) {
@@ -39,11 +38,12 @@ module.exports = {
       let subject_code = req.params.subject_code;
       let from = req.params.from
       let to = req.params.to
-        db.query("SELECT students.name as name, subjects.subject_name as subject, attendances.date as date," +
+    //   ,semester, section, faculty, subject_code
+        db.query("SELECT students.name as name, subjects.subject_name as subject, DATE_FORMAT(attendances.date, '%Y-%m-%d') as start," +
             " attendances.status as status FROM attendances inner join" +
             " students ON attendances.student_id = students.id" +
             " inner join subjects ON attendances.subject_id = subjects.subject_code" +
-            " WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND date between " + from + "and " + to, 
+            " WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND date BETWEEN ? AND ?",   
                 [semester, section, faculty, subject_code, from, to], (err, data) => {
                 if(err){
                     console.log(err)
