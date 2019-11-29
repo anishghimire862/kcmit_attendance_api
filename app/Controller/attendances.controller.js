@@ -42,7 +42,7 @@ module.exports = {
         db.query("SELECT students.name as name, subjects.subject_name as subject, DATE_FORMAT(attendances.date, '%Y-%m-%d') as start," +
             " attendances.status as status, teachers.name as teacherName FROM attendances inner join" +
             " students ON attendances.student_id = students.id" +
-            " inner join subjects ON attendances.subject_id = subjects.subject_code" +
+            " inner join subjects ON attendances.subject_id = subjects.id" +
             " inner join teachers ON attendances.teacher_id_fk = teachers.id" +
             " WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND date BETWEEN ? AND ?",   
                 [semester, section, faculty, subject_code, from, to], (err, data) => {
