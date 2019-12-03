@@ -20,6 +20,8 @@ var StudentSubjectSemesters = require('../Controller/student.subject.semesters.c
 
 var attendances = require('../Controller/attendances.controller');
 
+var excel = require('../Controller/excel.controller');
+
 // login
 
 router.post('/login',
@@ -182,6 +184,12 @@ router.post('/attendance',
 
 router.get('/attendance_sheet/:semester/:section/:faculty/:subject_code/:from/:to',
 	attendances.getAttendance
+)
+
+// excel 
+
+router.get('/excel',
+	excel.generateExcelSheet
 )
 
 module.exports = router;
