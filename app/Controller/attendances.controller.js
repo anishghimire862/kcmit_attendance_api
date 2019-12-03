@@ -32,13 +32,12 @@ module.exports = {
         })
     },
     getAttendance: function(req, res) {
-      let semester = req.params.semester;
-      let section = req.params.section;
-      let faculty = req.params.faculty;
-      let subject_code = req.params.subject_code;
-      let from = req.params.from
-      let to = req.params.to
-    //   ,semester, section, faculty, subject_code
+        let semester = req.params.semester;
+        let section = req.params.section;
+        let faculty = req.params.faculty;
+        let subject_code = req.params.subject_code;
+        let from = req.params.from;
+        let to = req.params.to;
         db.query("SELECT students.name as name, subjects.subject_name as subject, DATE_FORMAT(attendances.date, '%Y-%m-%d') as start," +
             " attendances.status as status, teachers.name as teacherName FROM attendances inner join" +
             " students ON attendances.student_id = students.id" +
@@ -55,20 +54,29 @@ module.exports = {
                 }
             }
 		)
-
-/*
-     db.query("SELECT * FROM student_semesters inner join students on student_semesters.student_id = students.id inner join student_subject_semesters on student_subject_semesters.student_semester_id = student_semesters.id inner join subjects on student_subject_semesters.subject_id = subjects.id inner join attendances on subjects.id = attendances.subject_id where semester = '6' and section = 'B' and faculty = 'BIM' and subject_code = 'IT0015'  and `date` >= '2019-09-01' and `date` <= '2019-09-30'",
-					(err,data) => {
-					if(err)
-						res.json(err)
-					else { 
-						console.log(data)
-						res.status(200).json({ data: data })
-					}
-				}
-			)
-*/
-
+    },
+    getAttendanceReport: function(callback) {
+        let semester = 7;
+        let section = 'B';
+        let faculty = 'BIM';
+        let subject_code = 'IT001';
+        let from = '2019-11-01';
+        let to = '2019-11-30';
+        db.query("SELECT students.name as name, subjects.subject_name as subject, DATE_FORMAT(attendances.date, '%Y-%m-%d') as start," +
+            " attendances.status as status, teachers.name as teacherName FROM attendances inner join" +
+            " students ON attendances.student_id = students.id" +
+            " inner join subjects ON attendances.subject_id = subjects.id" +
+            " inner join teachers ON attendances.teacher_id_fk = teachers.id" +
+            " WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND date BETWEEN ? AND ?",   
+                [semester, section, faculty, subject_code, from, to], (err, data) => {
+                if(err){
+                    console.log(err)
+                }
+                else{ 
+                    return callback(data)
+                }
+            }
+		)
     },
 
     submitAttendance: function(req, res) {
