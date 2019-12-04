@@ -17,12 +17,8 @@ module.exports = {
 
       uniqueCount = utility.getUniqueStudentsCount(attendanceData);
 
-      let rowCount = 2;
-      let colCount = 3;
       let nameRow = 2;
       let nameCol = 2;
-      let dateRow = 1;
-      let dateCol = 3;
 
       for(let i = 0; i < attendanceData.length; i++) {
         if(i < uniqueCount) {
@@ -31,19 +27,24 @@ module.exports = {
         }
       }
 
-      let uniqueDates = utility.getUniqueDate(attendanceData)
-      for(let i = 0; i < utility.getUniqueDateCount(attendanceData); i++) {
-        worksheet.cell(dateRow, dateCol).string(uniqueDates[i])
-        dateCol++;
-        // console.log(utility.getUniqueDate(attendanceData).length)
-      }
+      let dateRow = 1;
+      let dateCol = 3;
+      let statusRow = 2;
+      let statusCol = 3;
 
-      for(let i = 0; i<attendanceData.length; i++) {
-        worksheet.cell(rowCount, colCount).string(attendanceData[i].status)
-        rowCount++;
-        if((i+1) % uniqueCount == 0) {
-          rowCount = 2;
-          colCount++;
+      for(let i = 0; i < attendanceData.length; i++) {
+        if(i%uniqueCount == 0) {
+          worksheet.cell(dateRow, dateCol).string(attendanceData[i].start);
+          dateCol++;
+          statRow = 2
+        }
+        worksheet.cell(statusRow, statusCol).string(attendanceData[i].status);
+
+        if(uniqueCount+1 == statusRow) {
+         statusCol++;
+         statusRow = 2; 
+        } else {
+          statusRow++
         }
       }
       

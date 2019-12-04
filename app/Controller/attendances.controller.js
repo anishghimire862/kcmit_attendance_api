@@ -43,7 +43,7 @@ module.exports = {
             " students ON attendances.student_id = students.id" +
             " inner join subjects ON attendances.subject_id = subjects.id" +
             " inner join teachers ON attendances.teacher_id_fk = teachers.id" +
-            " WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND date BETWEEN ? AND ?",   
+            " WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND date BETWEEN ? AND ? ORDER BY start ASC",   
                 [semester, section, faculty, subject_code, from, to], (err, data) => {
                 if(err){
                     console.log(err)
@@ -60,14 +60,15 @@ module.exports = {
         let section = 'B';
         let faculty = 'BIM';
         let subject_code = 'IT001';
-        let from = '2019-11-01';
-        let to = '2019-11-30';
+        let from = '2019-12-01';
+        let to = '2019-12-30';
         db.query("SELECT students.name as name, subjects.subject_name as subject, DATE_FORMAT(attendances.date, '%Y-%m-%d') as start," +
             " attendances.status as status, teachers.name as teacherName FROM attendances inner join" +
             " students ON attendances.student_id = students.id" +
             " inner join subjects ON attendances.subject_id = subjects.id" +
             " inner join teachers ON attendances.teacher_id_fk = teachers.id" +
-            " WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND date BETWEEN ? AND ?",   
+            " WHERE semester=? AND section=? AND faculty=? AND subject_code=? AND date BETWEEN ? AND ?" +
+            " ORDER BY date ASC",   
                 [semester, section, faculty, subject_code, from, to], (err, data) => {
                 if(err){
                     console.log(err)
