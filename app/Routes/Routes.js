@@ -188,7 +188,7 @@ router.get('/attendance_sheet/:semester/:section/:faculty/:subject_code/:from/:t
 
 // excel 
 
-router.get('/excel',
+router.get('/excel/:semester/:section/:faculty/:subject_code/:from/:to',
 	excel.generateExcelSheet
 )
 
