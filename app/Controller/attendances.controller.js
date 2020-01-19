@@ -1,4 +1,5 @@
 const db = require('../Model/db');
+var attendanceReport = require('./excel.controller'); 
 
 module.exports = {
     getStudentsForAttendance: function(req, res) {
@@ -19,9 +20,9 @@ module.exports = {
                     let studentSemester = currentYear - studentEnrolledYear
                     studentSemester *= 2
                     
-                    if(currentMonth >= 11) {
-                        studentSemester += 1
-                    }
+										if((currentMonth >= 11 && currentMonth<=12) || (currentMonth >=1 && currentMonth <=4)) {
+											studentSemester -=1
+										}
 
                     studentsArray.push({...data[i], semester: studentSemester})
 
@@ -49,19 +50,18 @@ module.exports = {
                     console.log(err)
                 }
                 else{ 
-                    console.log(data)
                     res.status(200).json({data: data})
                 }
             }
 		)
     },
-    getAttendanceReport: function(callback) {
-        let semester = 7;
-        let section = 'B';
-        let faculty = 'BIM';
-        let subject_code = 'IT001';
-        let from = '2019-12-01';
-        let to = '2019-12-30';
+    getAttendanceReport: function(req, res) {
+        let semester = req.params.semester;
+        let section = req.params.section;
+        let faculty = req.params.faculty;
+        let subject_code = req.params.subject_code;
+        let from = req.params.from;
+        let to = req.params.to;
         db.query("SELECT students.name as name, subjects.subject_name as subject, DATE_FORMAT(attendances.date, '%Y-%m-%d') as start," +
             " attendances.status as status, teachers.name as teacherName FROM attendances inner join" +
             " students ON attendances.student_id = students.id" +
@@ -74,7 +74,10 @@ module.exports = {
                     console.log(err)
                 }
                 else{ 
-                    return callback(data)
+                    attendanceReport.generateExcelSheet(data)
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                    res.setHeader("Content-Disposition", "attachment; filename=" + "Excel.xlsx");
+                    res.sendFile('Excel.xlsx', { root: '.' })
                 }
             }
 		)
@@ -85,7 +88,6 @@ module.exports = {
     let date = datetime.toISOString().slice(0,10)
     let attendance = req.body
     for (var i=0; i<attendance.length; i++) {
-        // student_semester_id = attendance[i].student_semester_id;
         status = attendance[i].status
         student_id = attendance[i].student_id;
         semester = attendance[i].semester;
