@@ -12,6 +12,29 @@ module.exports = {
         })
     },
 
+		getTeacherSubjects: function(req, res) {
+  	  let teacherId = req.params.teacherId;
+      db.query("SELECT subject.id as subjectId, "+
+        "subject.subject_code as subjectCode, " +
+        "subject.subject_name as subject_name, " +
+        "ts.semester as semester, " +
+        "ts.faculty as faculty " +
+        "FROM teacher_subjects ts " +
+        "INNER JOIN " +
+        "subjects subject ON ts.subject_id = subject.id " +
+        "INNER JOIN " +
+        "teachers teacher ON ts.teacher_id = teacher.id " +
+        "WHERE "+
+        "teacher.id = ? ", [teacherId], (err, data) => {
+          if(err)
+            res.json(err);
+          else {
+            res.status(200).json({data: data});
+          }
+        })
+    },
+
+
     getSubjectById: function(req, res) {
         let id = req.params.id;
         db.query("SELECT * FROM subjects where id=?", [id], (err, data) => {
