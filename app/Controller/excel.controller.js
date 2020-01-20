@@ -3,14 +3,11 @@ var attendance = require('./attendances.controller');
 var utility = require('../../middleware/utility.functions');
 
 module.exports = {
-  generateExcelSheet: function(req, res) {
-    let attendanceData = [];
+  generateExcelSheet: function(data) {
+    let attendanceData = data;
     let uniqueCount = null;
     var workbook = new excel.Workbook();
     var worksheet = workbook.addWorksheet('Sheet 1');
-
-    attendance.getAttendanceReport(function (result) {
-      attendanceData = result
 
       worksheet.cell(1,1).string('S.N');
       worksheet.cell(1,2).string('Name');
@@ -49,9 +46,5 @@ module.exports = {
       }
       
       workbook.write('Excel.xlsx');    
-      res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-      res.setHeader("Content-Disposition", "attachment; filename=" + "Excel.xlsx");
-      res.sendFile('Excel.xlsx', { root: '.' })
-    })
   }
 }
