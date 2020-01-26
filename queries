@@ -1,0 +1,40 @@
+SELECT  (IFNull(gender,'Total')) AS gender,
+COUNT(id) AS Count
+FROM students
+GROUP BY gender
+WITH ROLLUP
+
+SELECT (IFNull(faculty, 'Total')) as faculty, 
+COUNT(*) as count
+FROM students 
+GROUP BY faculty WITH ROLLUP
+
+SELECT * FROM attendances
+WHERE YEAR(date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+AND MONTH(date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+
+SELECT
+COUNT(date) as count,
+date as date,
+WEEKDAY(date) as day
+FROM attendances
+GROUP BY date
+HAVING yearweek(DATE(date), 0) = yearweek(curdate(), 0)
+
+
+SELECT att.semester as semester,
+COUNT(att.status) as count,
+att.status as status,
+std.faculty as faculty,
+std.section as section,
+sub.subject_name as subject,
+sub.id as subjectId
+FROM attendances att
+INNER JOIN
+students std ON att.student_id = std.id
+INNER JOIN
+subjects sub ON att.subject_id = sub.id
+GROUP BY att.semester, status
+having subjectId = 6
+
+

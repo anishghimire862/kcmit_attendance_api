@@ -20,11 +20,7 @@ var StudentSubjectSemesters = require('../Controller/student.subject.semesters.c
 
 var attendances = require('../Controller/attendances.controller');
 
-var chart = require('../Controller/chart.controller');
-
 var excel = require('../Controller/excel.controller');
-
-var message = require('../Controller/message.controller');
 
 // login
 
@@ -140,18 +136,10 @@ router.patch('/teacher_subjects',
     TeacherSubjects.updateTeacherSubject
 );
 
-router.get('/subject_details/:subjectId', 
-	TeacherSubjects.getSubjectDetails
-);
-
 // subjects
 
 router.get('/subjects',
     Subjects.getSubjects
-);
-
-router.get('/teacher_subjects/:teacherId',
-	Subjects.getTeacherSubjects
 );
 
 router.get('/subjects/:id',
@@ -204,15 +192,4 @@ router.get('/excel/:semester/:section/:faculty/:subject_code/:from/:to',
 	attendances.getAttendanceReport
 )
 
-router.get('/daily_report/:semester/:subjectId', 
-	chart.getTodaysReportOfSubject
-)
-
-router.get('/message',
-	message.getMessage
-)
-
-router.post('/message', 
-	message.postMessage
-)
 module.exports = router;
