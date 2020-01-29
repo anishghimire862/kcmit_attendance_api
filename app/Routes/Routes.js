@@ -208,6 +208,10 @@ router.get('/daily_report/:semester/:subjectId',
 	chart.getTodaysReportOfSubject
 )
 
+router.get('/todays_subjects',
+	chart.getTodaysSubjects
+)
+
 router.get('/message',
 	message.getMessage
 )
