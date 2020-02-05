@@ -38,3 +38,28 @@ GROUP BY att.semester, status
 having subjectId = 6
 
 
+select *,
+CURRENT_DATE() - WEEKDAY(CURRENT_DATE) as diff
+from attendances where date between (CURRENT_DATE() - WEEK(CURRENT_DATE(),1)) and CURRENT_DATE()
+
+SELECT COUNT(att.status) as count, att.status as status, att.date as date, WEEKDAY(att.date) as day, att.semester as
+semester, stu.section as section, stu.faculty as faculty, sub.subject_name as subjectName, tec.name as name FROM attendances
+att INNER JOIN teachers tec on tec.id = att.teacher_id_fk INNER JOIN subjects sub on sub.id = att.subject_id INNER JOIN
+students stu on stu.id = att.student_id 
+WHERE semester = 7 and subject_id = 6 and date BETWEEN CURRENT_DATE() - WEEK(CURRENT_DATE(),1) and CURRENT_DATE()  
+GROUP BY date, semester, section, subjectName, status, day
+
+SELECT tec.name as teacherName,
+sub.subject_name as subjectName,
+stu.faculty as faculty,
+stu.section as section,
+count(case when att.status ='0'  then 1 end) as absent,
+count(case when att.status ='1' then 1 end) as present,
+count(date) as total,
+att.semester as semester,
+MONTHNAME(att.date) as month
+FROM attendances att
+INNER JOIN teachers tec ON tec.id = att.teacher_id_fk
+INNER JOIN subjects sub ON sub.id = att.subject_id
+INNER JOIN students stu on stu.id = att.student_id
+GROUP BY teacherName, faculty, semester, section, month

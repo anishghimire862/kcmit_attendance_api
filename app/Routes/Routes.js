@@ -221,12 +221,13 @@ router.get('/yesterdays_subjects',
   chart.getYesterdaysSubjects
 )
 
-
-router.get('/message',
-	message.getMessage
+router.get('/weekly_subjects',
+  chart.getWeeklySubjects
 )
 
-router.post('/message', 
-	message.postMessage
+
+router.get('/weekly_report/:semester/:subjectId',
+	chart.getWeeklyReportOfSubject
 )
+
 module.exports = router;
