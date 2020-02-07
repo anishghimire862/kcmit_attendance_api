@@ -230,4 +230,9 @@ router.get('/weekly_report/:semester/:subjectId',
 	chart.getWeeklyReportOfSubject
 )
 
+router.get('/attendance_report_within_date_range/:from?/:to?', 
+	chart.getAttendanceReportWithinDateRange
+)
+
+
 module.exports = router;

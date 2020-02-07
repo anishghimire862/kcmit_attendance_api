@@ -106,6 +106,26 @@ module.exports = {
 					res.status(200).json( { data: data  } )
 				}
 			})
+	},
+
+	getAttendanceReportWithinDateRange: function (req, res) {
+		let from = req.params.from
+		let to = req.params.to
+		let query = "SELECT tec.name as teacherName, sub.subject_name as subjectName, stu.faculty as faculty, stu.section as section, count(case when att.status ='0'  then 1 end) as absent, "+
+			"count(case when att.status ='1' then 1 end) as present, count(date) as total, att.semester as semester, MONTHNAME(att.date) as month, year(att.date) as year FROM attendances att "+
+			"INNER JOIN teachers tec ON tec.id = att.teacher_id_fk INNER JOIN subjects sub ON sub.id = att.subject_id INNER JOIN students stu on stu.id = att.student_id " +
+			"WHERE date BETWEEN ? and ?" +
+			" GROUP BY teacherName, faculty, semester, section, month"
+			
+
+		db.query(query, [from, to],  (err,data) => {
+			if(err) {
+				res.json(err)
+			} else {
+				res.json({data: data})
+			}
+		})
+
 	}
 
 }
