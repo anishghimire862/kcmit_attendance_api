@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 26, 2020 at 09:05 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.1
+-- Generation Time: Dec 19, 2020 at 12:36 PM
+-- Server version: 10.3.27-MariaDB
+-- PHP Version: 7.3.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -53,7 +52,53 @@ INSERT INTO `attendances` (`id`, `date`, `status`, `subject_id`, `student_id`, `
 (8, '2020-01-25', '1', 6, 24, 7, 11),
 (9, '2020-01-25', '0', 6, 25, 7, 11),
 (10, '2020-01-25', '0', 6, 26, 7, 11),
-(11, '2020-01-25', '0', 6, 27, 7, 11);
+(11, '2020-01-25', '0', 6, 27, 7, 11),
+(12, '2020-07-25', '1', 14, 1, 8, 11),
+(13, '2020-07-25', '1', 14, 4, 8, 11),
+(14, '2020-07-25', '1', 14, 7, 8, 11),
+(15, '2020-07-25', '1', 14, 8, 8, 11),
+(16, '2020-07-25', '0', 14, 21, 8, 11),
+(17, '2020-07-25', '1', 14, 22, 8, 11),
+(18, '2020-07-25', '0', 14, 23, 8, 11),
+(19, '2020-07-25', '1', 14, 24, 8, 11),
+(20, '2020-07-25', '0', 14, 25, 8, 11),
+(21, '2020-07-25', '0', 14, 26, 8, 11),
+(22, '2020-07-25', '0', 14, 27, 8, 11),
+(23, '2020-07-25', '1', 13, 1, 8, 12),
+(24, '2020-07-25', '1', 13, 4, 8, 12),
+(25, '2020-07-25', '1', 13, 7, 8, 12),
+(26, '2020-07-25', '1', 13, 8, 8, 12),
+(27, '2020-07-25', '0', 13, 21, 8, 12),
+(28, '2020-07-25', '1', 13, 22, 8, 12),
+(29, '2020-07-25', '0', 13, 23, 8, 12),
+(30, '2020-07-25', '1', 13, 24, 8, 12),
+(31, '2020-07-25', '0', 13, 25, 8, 12),
+(32, '2020-07-25', '0', 13, 26, 8, 12),
+(33, '2020-07-25', '0', 13, 27, 8, 12),
+(34, '2020-07-26', '1', 13, 1, 8, 12),
+(35, '2020-07-26', '1', 13, 4, 8, 12),
+(36, '2020-07-26', '1', 13, 7, 8, 12),
+(37, '2020-07-26', '1', 13, 8, 8, 12),
+(38, '2020-07-26', '0', 13, 21, 8, 12),
+(39, '2020-07-26', '0', 13, 22, 8, 12),
+(40, '2020-07-26', '0', 13, 23, 8, 12),
+(41, '2020-07-26', '0', 13, 24, 8, 12),
+(42, '2020-07-26', '0', 13, 25, 8, 12),
+(43, '2020-07-26', '0', 13, 26, 8, 12),
+(44, '2020-07-26', '0', 13, 27, 8, 12),
+(45, '2020-07-26', '1', 14, 1, 8, 11),
+(46, '2020-07-26', '1', 14, 4, 8, 11),
+(47, '2020-07-26', '1', 14, 7, 8, 11),
+(48, '2020-07-26', '1', 14, 8, 8, 11),
+(49, '2020-07-26', '0', 14, 21, 8, 11),
+(50, '2020-07-26', '0', 14, 22, 8, 11),
+(51, '2020-07-26', '0', 14, 23, 8, 11),
+(52, '2020-07-26', '0', 14, 24, 8, 11),
+(53, '2020-07-26', '0', 14, 25, 8, 11),
+(54, '2020-07-26', '0', 14, 26, 8, 11),
+(55, '2020-07-26', '0', 14, 27, 8, 11),
+(56, '2020-11-24', '1', 11, 19, 1, 11),
+(57, '2020-11-24', '1', 11, 20, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -155,7 +200,11 @@ INSERT INTO `subjects` (`id`, `subject_code`, `subject_name`) VALUES
 (8, 'CG', 'Computer Graphics'),
 (9, 'JAVA', 'Java Programming - II'),
 (10, 'OM', 'Operations Management'),
-(11, 'DL', 'Digital Logic');
+(11, 'DL', 'Digital Logic'),
+(12, 'ENTR', 'IT Entrepreneurship and Supply Chain Management'),
+(13, 'ECOIT', 'Economics of Information'),
+(14, 'OS', 'Operating System'),
+(15, 'MW', 'Data Mining and Warehousing');
 
 -- --------------------------------------------------------
 
@@ -179,12 +228,13 @@ CREATE TABLE `teachers` (
 
 INSERT INTO `teachers` (`id`, `name`, `email`, `phone`, `password`, `image`, `role`) VALUES
 (1, 'admin', 'admin@kcmit.edu.np', '1234567890', 'admin', 'image-1579513819073.jpeg', 'admin'),
-(11, 'Indra PC', 'ipc@ss.co', '1234567890', 'JbL~7=nE18vsh,e\\^VHs', 'image-1579513846171.png', 'teacher'),
-(12, 'Kul Prasad Poudel', 'kul@ss.co', '1234567890', 'JbLV;0!l^_yD|\\H&0DHs', 'image-1579513859111.png', 'teacher'),
+(11, 'Indra PC', 'indra@kcmit.edu.np', '1234567890', 'indra', 'image-1579513846171.png', 'teacher'),
+(12, 'Kul Prasad Poudel', 'kul@kcmit.edu.np', '1234567890', 'kul', 'image-1579513859111.png', 'teacher'),
 (13, 'Dinesh Bajhracharya', 'dinesh@ss.co', '1234567890', 'JbL\",CXaO6m5*mllgxHs', 'image-1579513834194.png', 'teacher'),
 (14, 'Roshan Rijal', 'roshan@ss.co', '1234567890', 'JbLG_d]ZCDb0_U/elhHs', 'image-1562687330203.png', 'teacher'),
 (15, 'Pradip Bhochhibhoya', 'pradip@ss.co', '1234567890', 'JbLEe`]Ng#W5%jQMJ>Hs', 'image-1579513874972.png', 'teacher'),
-(16, 'Tulsi Bastola', 'ts@ss.co', '1234567890', 'JbL{RCtr>1e$l9`~[4Hs', 'image-1562687330203.png', 'teacher');
+(16, 'Tulsi Bastola', 'ts@ss.co', '1234567890', 'JbL{RCtr>1e$l9`~[4Hs', 'image-1562687330203.png', 'teacher'),
+(17, 'Binit Shrestha', 'binit@binit.com', '9866566565', 'JbLt^MT|:d9DuzpHN,Hs', 'image-1595766848649.png', 'teacher');
 
 -- --------------------------------------------------------
 
@@ -216,7 +266,11 @@ INSERT INTO `teacher_subjects` (`id`, `teacher_id`, `subject_id`, `semester`, `f
 (10, 16, 10, '7', 'BIM'),
 (11, 15, 6, '3', 'BBA'),
 (12, 11, 11, '1', 'BCA'),
-(13, 11, 11, '1', 'BIM');
+(13, 11, 11, '1', 'BIM'),
+(14, 17, 12, '8', 'BIM'),
+(15, 12, 13, '8', 'BIM'),
+(16, 11, 14, '8', 'BIM'),
+(17, 13, 15, '8', 'BIM');
 
 --
 -- Indexes for dumped tables
@@ -280,7 +334,7 @@ ALTER TABLE `teacher_subjects`
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -304,19 +358,19 @@ ALTER TABLE `student_subject_semesters`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `teacher_subjects`
 --
 ALTER TABLE `teacher_subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
